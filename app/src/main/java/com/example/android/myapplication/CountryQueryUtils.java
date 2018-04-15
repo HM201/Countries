@@ -55,11 +55,13 @@ public final class CountryQueryUtils {
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
 
-            //get the root file of json.
-            JSONObject jsonRootObject = new JSONObject(countryJSON);
+//            //get the root file of json.
+//            JSONObject jsonRootObject = new JSONObject(countryJSON);
+//
+//            //get the instance of JASONArray that contains JSONObjects
+//            JSONArray countryArray = jsonRootObject.optJSONArray("");
 
-            //get the instance of JASONArray that contains JSONObjects
-            JSONArray countryArray = jsonRootObject.optJSONArray("");
+            JSONArray countryArray = new JSONArray(countryJSON);
 
             //get first and only country in the country array
             JSONObject country = countryArray.getJSONObject(0);
@@ -70,7 +72,7 @@ public final class CountryQueryUtils {
             //get currency name
             JSONArray currencyArray = country.optJSONArray("currencies");
             JSONObject currencyObject = currencyArray.getJSONObject(0);
-            String currency = country.optString("name");
+            String currency = currencyObject.optString("name");
 
             //get capital name
             String capital = country.optString("capital");

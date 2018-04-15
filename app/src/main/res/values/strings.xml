@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
     <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
+        <item>egypt</item>
+        <item>japan</item>
         <item>Earth</item>
         <item>Mars</item>
         <item>Jupiter</item>
@@ -10,4 +10,7 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
