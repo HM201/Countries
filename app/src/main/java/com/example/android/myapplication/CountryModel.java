@@ -31,6 +31,7 @@ public class CountryModel extends Observable {
 
     public void setName(String name) {
         this.name = name;
+        setChanged();
     }
 
     public String getCurrency() {
@@ -39,6 +40,7 @@ public class CountryModel extends Observable {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+        setChanged();
     }
 
     public int getPopulation() {
@@ -47,6 +49,7 @@ public class CountryModel extends Observable {
 
     public void setPopulation(int population) {
         this.population = population;
+        setChanged();
     }
 
     public String getLanguage() {
@@ -55,6 +58,7 @@ public class CountryModel extends Observable {
 
     public void setLanguage(String language) {
         this.language = language;
+        setChanged();
     }
 
     public String getCapital() {
@@ -63,6 +67,7 @@ public class CountryModel extends Observable {
 
     public void setCapital(String capital) {
         this.capital = capital;
+        setChanged();
     }
 
     public boolean isEmpty() {
