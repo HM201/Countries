@@ -1,5 +1,5 @@
 /**
- * Created by Hisham on 4/11/2018.
+ * Created by Mazen on 4/16/2018.
  */
 
 package com.example.android.myapplication;
@@ -7,7 +7,6 @@ package com.example.android.myapplication;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,31 +20,29 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
- * Helper methods related to requesting and receiving earthquake data from USGS.
+ * Helper methods related to requesting and receiving weather map.
  */
-public final class CountryQueryUtils {
+public final class weatherQueryUtils {
     /**
-     * Create a private constructor because no one should ever create a {@link CountryQueryUtils} object.
+     * Create a private constructor because no one should ever create a {@link weatherQueryUtils} object.
      * This class is only meant to hold static variables and methods, which can be accessed
-     * directly from the class name CountryQueryUtils (and an object instance of CountryQueryUtils is not needed).
+     * directly from the class name weatherQueryUtils (and an object instance of weatherQueryUtils is not needed).
      */
-    private static final String LOG_TAG = "CountryQueryUtils";
+    private static final String LOG_TAG = "weatherQueryUtils";
 
-    private CountryQueryUtils() {
+    private weatherQueryUtils() {
     }
 
     /**
-     * Return a list of {@link CountryModel} objects that has been built up from
+     * Return a list of {@link weatherModel} objects that has been built up from
      * parsing a JSON response.
      */
-    public static CountryModel extractFeatureFromJson(String countryJSON) {
+    public static weatherModel extractFeatureFromJson(String weatherJSON) {
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(countryJSON)) {
+        if (TextUtils.isEmpty(weatherJSON)) {
             return null;
         }
-
-        // Create an empty CountryModel that we can start adding attributes to
-        CountryModel countryModel = null;
+        weatherModel weathermodel = null;
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -55,48 +52,27 @@ public final class CountryQueryUtils {
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
 
-//            //get the root file of json.
-//            JSONObject jsonRootObject = new JSONObject(countryJSON);
-//
-//            //get the instance of JASONArray that contains JSONObjects
-//            JSONArray countryArray = jsonRootObject.optJSONArray("");
+            JSONObject weatherObject = new JSONObject(weatherJSON);
 
-            JSONArray countryArray = new JSONArray(countryJSON);
+            //get the "Temperature" of the country
+            String temperature = weatherObject.optString("Temperature");
+            String WeatherDescription = weatherObject.optString("WeatherDescription");
+            String WindSpeed = weatherObject.optString("WindSpeed");
+            String WindDirectionDegree = weatherObject.optString("WindDirectionDegree");
 
-            //get first and only country in the country array
-            JSONObject country = countryArray.getJSONObject(0);
 
-            //get country name
-            String name = country.optString("name");
-
-            //get currency name
-            JSONArray currencyArray = country.optJSONArray("currencies");
-            JSONObject currencyObject = currencyArray.getJSONObject(0);
-            String currency = currencyObject.optString("name");
-
-            //get capital name
-            String capital = country.optString("capital");
-
-            //get population number
-            int population = country.optInt("population");
-
-            //get language name
-            JSONArray languagesArray = country.optJSONArray("languages");
-            JSONObject languageObject = languagesArray.getJSONObject(0);
-            String language = languageObject.optString("name");
-
-            //add attributes to the countryModel
-            countryModel = new CountryModel(name, currency, population, language, capital);
+            //create weather model and passing the data extracting from the jason to the constructor of the weathermodel class
+            weathermodel = new weatherModel(temperature, WeatherDescription, WindSpeed, WindDirectionDegree);
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("CountryQueryUtils", "Problem parsing the Country JSON results", e);
+            Log.e("weatherQueryUtils", "Problem parsing the weather JSON results", e);
         }
 
-        // Return the countryModel
-        return countryModel;
+        // Return the weatherModel
+        return weathermodel;
     }
 
     /**
@@ -175,9 +151,9 @@ public final class CountryQueryUtils {
     }
 
     /**
-     * Query the USGS dataset and return an object of {@link CountryModel} objects.
+     * Query the weather map model  and return an object of {@link weatherModel} objects.
      */
-    public static CountryModel fetchCountryData(String requestUrl) {
+    public static weatherModel fetchWeatherData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -189,10 +165,10 @@ public final class CountryQueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        CountryModel countryModel = extractFeatureFromJson(jsonResponse);
+        // Extract relevant fields from the JSON response and create a list of {@link weathermodel}
+        weatherModel weathermodel = extractFeatureFromJson(jsonResponse);
 
-        // Return the list of {@link Earthquake}s
-        return countryModel;
+        // Return the list of {@link weathermodel}
+        return weathermodel;
     }
 }

@@ -4,24 +4,24 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 
 /**
- * Created by Hisham on 4/11/2018.
+ * Created by Satellite on 4/16/2018.
  */
 
-public class CountryAsyncTaskLoader extends AsyncTaskLoader<CountryModel> {
+public class weatherAsyncTaskLoader extends AsyncTaskLoader<weatherModel> {
     private String url;
 
-    public CountryAsyncTaskLoader(Context context, String url) {
+    public weatherAsyncTaskLoader(Context context, String url) {
         super(context);
         this.url = url;
     }
 
     @Override
-    public CountryModel loadInBackground() {
+    public weatherModel loadInBackground() {
         if (url == null)
             return null;
         //fetch country data from json file
-        CountryModel countryModel = CountryQueryUtils.fetchCountryData(url);
-        return countryModel;
+        weatherModel weathermodel = weatherQueryUtils.fetchWeatherData(url);
+        return weathermodel;
     }
 
     @Override

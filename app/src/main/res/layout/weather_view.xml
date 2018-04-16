@@ -4,44 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.myapplication.CountryController">
-
+    tools:context="com.example.android.myapplication.weatherController">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Country information !"
-        android:textSize="20dp" />
+        android:paddingTop="20dp"
+        android:text="weather information!"
+        android:textSize="24dp" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="temperature" />
 
     <TextView
-        android:id="@+id/currency"
+        android:id="@+id/weather_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="currency!" />
+        android:text="weather description" />
 
     <TextView
-        android:id="@+id/population"
+        android:id="@+id/wind_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="population!" />
+        android:text="wind speed" />
 
     <TextView
-        android:id="@+id/language"
+        android:id="@+id/wind_direction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="language!" />
-
-    <TextView
-        android:id="@+id/capital"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="capital!" />
+        android:text="wind direction" />
 
 
 </LinearLayout>

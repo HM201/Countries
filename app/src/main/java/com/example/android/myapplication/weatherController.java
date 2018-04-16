@@ -1,5 +1,6 @@
 package com.example.android.myapplication;
 
+
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
@@ -11,18 +12,19 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import static com.example.android.myapplication.CompositeOnClickListener.listeners;
 
 
-public class CountryController extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<CountryModel> {
+public class weatherController extends Fragment implements AdapterView.OnClickListener, LoaderManager.LoaderCallbacks<weatherModel> {
 
-    private final CountryController self = this;
-    public CountryObserver countryObserver;
-    private String URL = "https://restcountries.eu/rest/v2/name/";
-    private CountryModel countryModel;
+    private final weatherController self = this;
+    public weatherObserver weatherobserver;
+    private String URL = "http://restapi.demoqa.com/utilities/weatherfull/city/";
+    private weatherModel weathermodel;
     private LoaderManager loaderManager;
     private String choosenName;
 
@@ -31,74 +33,73 @@ public class CountryController extends Fragment implements View.OnClickListener,
         super.onActivityCreated(savedInstanceState);
         //add fragment to list of listeners
         listeners.add(this);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //define the weather observer
+        weatherobserver = new weatherObserver();
+        //define the weather model
+        weathermodel = new weatherModel();
 
-        countryObserver = new CountryObserver();
-
-
-        countryModel = new CountryModel();
-
-        countryModel.addObserver(countryObserver);
+        weathermodel.addObserver(weatherobserver);
         // Get a reference to the LoaderManager, in order to interact with loaders.
         loaderManager = getLoaderManager();
 
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.country_view, container, false);
+        return inflater.inflate(R.layout.weather_view, container, false);
     }
 
     @Override
-    public Loader<CountryModel> onCreateLoader(int id, Bundle args) {
+    public Loader<weatherModel> onCreateLoader(int id, Bundle args) {
         //create new loader and pass to it the context
-        return new CountryAsyncTaskLoader(getActivity(), URL + choosenName);
+        return new weatherAsyncTaskLoader(getActivity(), URL + choosenName);
     }
 
     @Override
-    public void onLoadFinished(Loader<CountryModel> loader, CountryModel country) {
+    public void onLoadFinished(Loader<weatherModel> loader, weatherModel weather) {
+
         // If there is a valid {@link country}, then add it to the adapter's
         // data set. This will trigger the country to update.
-        if (country != null /*&& !country.isEmpty()*/) {
-            countryModel.setCapital(country.getCapital());
-            countryModel.setCurrency(country.getCurrency());
-            countryModel.setLanguage(country.getLanguage());
-            countryModel.setPopulation(country.getPopulation());
-            countryModel.setName(country.getName());
+        if (weather != null /*&& !country.isEmpty()*/) {
+            weathermodel.setTemperature(weather.getTemperature());
+            weathermodel.setWindspeed(weather.getWindspeed());
+            weathermodel.setWindDirection(weather.getWindDirection());
+            weathermodel.setWeatherDesc(weather.getWeatherDesc());
+
             //add notify function.
-//            countryModel.notifyObservers();
+//            weathermodel.notifyObservers();
 
 
-            TextView nameTextView = (TextView) getActivity().findViewById(R.id.name);
-            nameTextView.setText(countryModel.getName());
+            TextView temperature = (TextView) getActivity().findViewById(R.id.temp);
+            temperature.setText(weathermodel.getTemperature());
 
-            TextView currencyTextView = (TextView) getActivity().findViewById(R.id.currency);
-            currencyTextView.setText(countryModel.getCurrency());
+            TextView windSpeed = (TextView) getActivity().findViewById(R.id.wind_speed);
+            windSpeed.setText(weathermodel.getWindspeed());
 
-            TextView populationTextView = (TextView) getActivity().findViewById(R.id.population);
-            populationTextView.setText(Integer.toString(countryModel.getPopulation()));
+            TextView windDirection = (TextView) getActivity().findViewById(R.id.wind_direction);
+            windDirection.setText(weathermodel.getWindDirection());
 
-            TextView languageTextView = (TextView) getActivity().findViewById(R.id.language);
-            languageTextView.setText(countryModel.getLanguage());
-
-            TextView capitalTextView = (TextView) getActivity().findViewById(R.id.capital);
-            capitalTextView.setText(countryModel.getCapital());
-
+            TextView windDesc = (TextView) getActivity().findViewById(R.id.weather_desc);
+            windDesc.setText(weathermodel.getWeatherDesc());
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<CountryModel> loader) {
+    public void onLoaderReset(Loader<weatherModel> loader) {
 
     }
 
+
     @Override
     public void onClick(View v) {
+
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner);
         choosenName = spinner.getSelectedItem().toString();
-
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager) getActivity().
@@ -109,6 +110,7 @@ public class CountryController extends Fragment implements View.OnClickListener,
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
+
 
             if (loaderManager.getLoader(1) == null) {
 
