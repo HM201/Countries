@@ -93,6 +93,7 @@ public class CountryController extends Fragment implements View.OnClickListener,
     public void onLoaderReset(Loader<CountryModel> loader) {
 
     }
+
     @Override
     public void onClick(View v) {
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner);

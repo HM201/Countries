@@ -17,12 +17,13 @@ public class CountryAsyncTaskLoader extends AsyncTaskLoader<CountryModel> {
 
     @Override
     public CountryModel loadInBackground() {
-        if(url==null)
+        if (url == null)
             return null;
         //fetch country data from json file
         CountryModel countryModel = CountryQueryUtils.fetchCountryData(url);
         return countryModel;
     }
+
     @Override
     protected void onStartLoading() {
         forceLoad();

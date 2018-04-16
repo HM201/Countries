@@ -45,7 +45,7 @@ public final class CountryQueryUtils {
         }
 
         // Create an empty CountryModel that we can start adding attributes to
-        CountryModel countryModel=null;
+        CountryModel countryModel = null;
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -86,7 +86,7 @@ public final class CountryQueryUtils {
             String language = languageObject.optString("name");
 
             //add attributes to the countryModel
-            countryModel = new CountryModel(name,currency,population,language,capital);
+            countryModel = new CountryModel(name, currency, population, language, capital);
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
@@ -98,6 +98,7 @@ public final class CountryQueryUtils {
         // Return the countryModel
         return countryModel;
     }
+
     /**
      * Returns new URL object from the given string URL.
      */
@@ -172,6 +173,7 @@ public final class CountryQueryUtils {
         }
         return output.toString();
     }
+
     /**
      * Query the USGS dataset and return an object of {@link CountryModel} objects.
      */

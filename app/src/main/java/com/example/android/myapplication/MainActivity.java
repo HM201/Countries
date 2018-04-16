@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity /*implements AdapterView.OnI
 //    private String chosenCountryName;
     private Spinner spinner;
     private CompositeOnClickListener compositeOnClickListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
